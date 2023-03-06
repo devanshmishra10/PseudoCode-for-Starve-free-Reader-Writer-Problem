@@ -11,6 +11,7 @@ In this approach, writers are given priority over readers. However, this can cau
 This approach grants access to the resource in the order of arrival for both readers and writers. If there are readers already accessing the resource, a writer will have to wait until they finish before being able to modify the resource. Similarly, new readers arriving while others are accessing the resource will have to wait until the resource is free. We're using fair queuing between readers and writers in order to have a starve free solution.
 <br/> 
 Here I will be discussing about the starve free (Third Readers Writers Problem) solution pseudocode where no priority is given.
+
 ## PseudoCode:
 * Step 1 (Basic structure): <br/>
 In order to prevent starvation and ensure that both readers and writers have fair access to the resource, we will use a semaphore called "orderMutex" to represent the order of arrival. This semaphore will be acquired by any entity that requests access to the resource and will be released as soon as that entity gains access to the resource. By using the orderMutex semaphore in this way, we can ensure that all entities accessing the resource are queued fairly, regardless of whether they are readers or writers. This will help to prevent any one entity from monopolizing the resource and will ensure that all entities have a fair chance of accessing it.
