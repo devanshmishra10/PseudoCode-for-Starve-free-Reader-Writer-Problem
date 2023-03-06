@@ -52,7 +52,7 @@ void writer()
   
   V(orderMutex);           // Release order of arrival semaphore (we have been served)
 
-  WriteResource();         // Here the writer can modify the resource at will
+  WriteResource();         // the writer can modify the resource at will here
 
   V(accessMutex);          // Release exclusive access to the resource
 }
@@ -64,7 +64,7 @@ semaphore accessMutex=1;     // Initialized to 1
 semaphore readersMutex=1;    // Initialized to 1
 semaphore orderMutex=1;      // Initialized to 1
 
-unsigned int readers = 0;  // Number of readers accessing the resource
+unsigned int readers = 0;    // It is the number of readers accessing the resource
 
 void reader()
 {
@@ -72,9 +72,9 @@ void reader()
 
   P(readersMutex);         // We will manipulate the readers counter
   
-  if (readers == 0)        // If there are currently no readers (we came first)...
-    P(accessMutex);        // ...requests exclusive access to the resource for readers
-  readers++;               // Note that there is now one more reader
+  if (readers == 0)        // If we came first and there are currently no readers ...
+    P(accessMutex);        // ...then requests exclusive access to the resource for readers
+  readers++;               // Note that there is now one more reader so increment readers
   
   V(orderMutex);           // Release order of arrival semaphore (we have been served)
   V(readersMutex);         // We are done accessing the number of readers for now
@@ -83,9 +83,9 @@ void reader()
 
   P(readersMutex);         // We will manipulate the readers counter
   
-  readers--;               // We are leaving, there is one less reader
+  readers--;               // Since We are leaving, there will be one less reader so decrement readers
   if (readers == 0)        // If there are no more readers currently reading...
-    V(accessMutex);        // ...release exclusive access to the resource
+    V(accessMutex);        // ...then release exclusive access to the resource
   
   V(readersMutex);         // We are done accessing the number of readers for now
 }
